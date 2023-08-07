@@ -7,7 +7,7 @@ We are encouraged to complete tasks about cloning the AirBnB website,
 the purpse is to learn how does this websites work
 and to learn the problem solving.
 ```
-[-> AirBnB]("https://github.com/abdelemjidessaid/AirBnB_clone")
+[AirBnB]("https://github.com/abdelemjidessaid/AirBnB_clone")
 
 
 ### 📂️ models
@@ -17,7 +17,7 @@ and to learn the problem solving.
     Directory that holds all models of the porject which is
     class that is pices of data.
     ```
-    [-> Link to models dir]("https://github.com/abdelemjidessaid/AirBnB_clone/models")
+    [models dir]("https://github.com/abdelemjidessaid/AirBnB_clone/models")
 
 
 #### 📃️ BaseModel
@@ -47,7 +47,7 @@ and to learn the problem solving.
     ```
     Subdirectory that holds module of project Engine.
     ```
-    [-> Link to engine dir]("https://github.com/abdelemjidessaid/AirBnB_clone/models/engine")
+    [engine dir]("https://github.com/abdelemjidessaid/AirBnB_clone/models/engine")
 
 
 #### 📃️ file_storage
@@ -56,7 +56,7 @@ and to learn the problem solving.
     ```
     This is the engine of this project.
     ```
-    [-> Link to file storage]("https://github.com/abdelemjidessaid/AirBnB_clone/models/engine/file_storage.py")
+    [file storage]("https://github.com/abdelemjidessaid/AirBnB_clone/models/engine/file_storage.py")
 
 
 ### 📃️ Console
@@ -80,4 +80,4 @@ and to learn the problem solving.
     (hbnb) quit
     $
     ```
-[-> Link to console]("https://github.com/abdelemjidessaid/AirBnB_clone/console.py")
+[console]("https://github.com/abdelemjidessaid/AirBnB_clone/console.py")
