@@ -7,8 +7,59 @@ We are encouraged to complete tasks about cloning the AirBnB website,
 the purpse is to learn how does this websites work
 and to learn the problem solving.
 ```
+[-> AirBnB]("https://github.com/abdelemjidessaid/AirBnB_clone")
 
-### Console
+
+### 📂️ models
+
+* Models Directory:
+    ```
+    Directory that holds all models of the porject which is
+    class that is pices of data.
+    ```
+    [-> Link to models dir]("https://github.com/abdelemjidessaid/AirBnB_clone/models")
+
+
+#### 📃️ BaseModel
+
+* Purpese:
+    ```
+    Class of BaseModel created for reason, which is to avoid the repetition
+    of some functions (dry) concept.
+
+    All Model classes inherit from BaseModel next methods and attributes:
+        - id (string): each instance should have an id.
+        - created_at (object): object of datetime class, which contains
+          the date & time of creation of this object.
+        - update_at (object): object of datetime class, which contains
+          the date & time of last update.
+        - save (method): function that updates the update_at attribute.
+        - __str__ (method): function that returns a string representation
+          of the instance.
+        - to_dict (method): function that returns a dictionary
+          representation of the instance.
+    ```
+
+
+#### 📂️ engine
+
+* Engine Directory:
+    ```
+    Subdirectory that holds module of project Engine.
+    ```
+    [-> Link to engine dir]("https://github.com/abdelemjidessaid/AirBnB_clone/models/engine")
+
+
+#### 📃️ file_storage
+
+* File Storage:
+    ```
+    This is the engine of this project.
+    ```
+    [-> Link to file storage]("https://github.com/abdelemjidessaid/AirBnB_clone/models/engine/file_storage.py")
+
+
+### 📃️ Console
 
 * Purpse of console:
     ```
@@ -29,23 +80,4 @@ and to learn the problem solving.
     (hbnb) quit
     $
     ```
-
-### BaseModel
-
-* Purpese:
-    ```
-    Class of BaseModel created for reason, which is to avoid the repetition
-    of some functions (dry) concept.
-
-    All Model classes inherit from BaseModel next methods and attributes:
-        - id (string): each instance should have an id.
-        - created_at (object): object of datetime class, which contains
-          the date & time of creation of this object.
-        - update_at (object): object of datetime class, which contains
-          the date & time of last update.
-        - save (method): function that updates the update_at attribute.
-        - __str__ (method): function that returns a string representation
-          of the instance.
-        - to_dict (method): function that returns a dictionary
-          representation of the instance.
-    ```
+[-> Link to console]("https://github.com/abdelemjidessaid/AirBnB_clone/console.py")
