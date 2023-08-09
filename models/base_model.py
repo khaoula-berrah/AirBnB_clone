@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import uuid
+import models
 from datetime import datetime
 
 """
@@ -38,6 +39,7 @@ class BaseModel:
             current_time = datetime.now()
             self.created_at = current_time
             self.updated_at = current_time
+            models.storage.new(self)
 
     def __str__(self):
         """
@@ -54,6 +56,7 @@ class BaseModel:
             update_at with the current date & time.
         """
         self.updated_at = datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         """
