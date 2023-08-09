@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import json
-import os
 from models.base_model import BaseModel
 
 """
