@@ -2,6 +2,7 @@
 
 import json
 from models.base_model import BaseModel
+from models.user import User
 
 """
     Module of FileStorage.
@@ -51,7 +52,7 @@ class FileStorage:
             Return:
                 class (class): return class from its name.
         """
-        d = {"BaseModel": BaseModel}
+        d = {"BaseModel": BaseModel, "User": User}
         return d[name]
 
     def reload(self):

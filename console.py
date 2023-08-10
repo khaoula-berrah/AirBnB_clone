@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 
 import cmd
+import re
+from shlex import split
+from models.base_model import BaseModel
+from models.user import User
+from models import storage
 
 
 """
@@ -15,11 +20,32 @@ import cmd
 """
 
 
-class console(cmd.Cmd):
+def parse(arg):
+    curly_braces = re.search(r"\{(.*?)\}", arg)
+    brackets = re.search(r"\[(.*?)\]", arg)
+    if curly_braces is None:
+        if brackets is None:
+            return [i.strip(",") for i in split(arg)]
+        else:
+            lexer = split(arg[:brackets.span()[0]])
+            retl = [i.strip(",") for i in lexer]
+            retl.append(brackets.group())
+            return retl
+    else:
+        lexer = split(arg[:curly_braces.span()[0]])
+        retl = [i.strip(",") for i in lexer]
+        retl.append(curly_braces.group())
+        return retl
+
+class HBNBCommand(cmd.Cmd):
     """
         Class of console.
     """
     prompt = "(hbnb) "
+    classes = {
+            "BaseModel": BaseModel,
+            "User": User
+    }
 
     def emptyline(self):
         """
@@ -29,11 +55,154 @@ class console(cmd.Cmd):
 
     def do_quit(self, line):
         """
-            do_quit - function that quits the interpreter.
+            Method that exits the program.
+            Return:
+                value (bool): True
         """
         return True
 
+    def do_EOF(self, line):
+        """
+            Method that exits the program.
+            Return:
+                value (bool): True
+        """
+        return True
+
+    def do_create(self, line=None):
+        """
+            Method that create new instances from Classes.
+        """
+        if line is None or line == "":
+            print("** class name missing **")
+        else:
+            if line not in self.classes:
+                print("** class doesn't exist **")
+            else:
+                instance = self.classes[line]()
+                instance.save()
+                print(instance.id)
+
+    def do_show(self, line=None):
+        """
+            Method shows the data of a specific object by
+            The Class Name and Id.
+        """
+
+        all = storage.all()
+
+        if line is None:
+            return
+        words = line.split(" ")
+        if len(words) == 0 or line == "":
+            print("** class name missing **")
+        elif len(words) == 1:
+            print("** instance id missing **")
+        elif words[0] not in self.classes:
+            print("** class doesn't exist **")
+        else:
+            full_name = f"{words[0]}.{words[1]}"
+            if full_name not in all:
+                print("** no instance found **")
+            else:
+                print(all[full_name])
+
+    def do_destroy(self, line):
+        """
+            Method that removes an object using its
+            Class nams and id.
+        """
+
+        if line is None:
+            return
+        words = line.split(" ")
+        if len(words) == 0 or line == "":
+            print("** class name missing **")
+        elif len(words) == 1:
+            print("** instance id missing **")
+        elif words[0] not in self.classes:
+            print("** class doesn't exist **")
+        else:
+            full_name = f"{words[0]}.{words[1]}"
+            if full_name not in storage.all():
+                print("** no instance found **")
+            else:
+                del storage.all()[full_name]
+
+    def do_all(self, line=None):
+        """
+            Method that prints all objects based on its class name
+            or not, as a string list.
+        """
+
+        all = storage.all()
+
+        if line is None:
+            return
+        if line == "":
+            obj_list = [f"{k}" for k in all.values()]
+            print(obj_list)
+        else:
+            if line.strip() not in self.classes:
+                print("** class doesn't exist **")
+            else:
+                obj_list = []
+                for o in all.values():
+                    if line == o.__class__.__name__:
+                        obj_list.append(o.__str__())
+                print(obj_list)
+
+    def do_update(self, line=None):
+        """
+            Method that updates object using the class name
+            and object's id and attribute's name and the attribute value.
+            Usage:
+                update <class name> <id> <attribute name> "<attribute value>"
+        """
+
+        argl = parse(line)
+        objdict = storage.all()
+
+        if len(argl) == 0:
+            print("** class name missing **")
+            return False
+        if argl[0] not in self.classes:
+            print("** class doesn't exist **")
+            return False
+        if len(argl) == 1:
+            print("** instance id missing **")
+            return False
+        if "{}.{}".format(argl[0], argl[1]) not in objdict.keys():
+            print("** no instance found **")
+            return False
+        if len(argl) == 2:
+            print("** attribute name missing **")
+            return False
+        if len(argl) == 3:
+            try:
+                type(eval(argl[2])) != dict
+            except NameError:
+                print("** value missing **")
+                return False
+
+        if len(argl) == 4:
+            obj = objdict["{}.{}".format(argl[0], argl[1])]
+            if argl[2] in obj.__class__.__dict__.keys():
+                valtype = type(obj.__class__.__dict__[argl[2]])
+                obj.__dict__[argl[2]] = valtype(argl[3])
+            else:
+                obj.__dict__[argl[2]] = argl[3]
+        elif type(eval(argl[2])) == dict:
+            obj = objdict["{}.{}".format(argl[0], argl[1])]
+            for k, v in eval(argl[2]).items():
+                if (k in obj.__class__.__dict__.keys() and
+                        type(obj.__class__.__dict__[k]) in {str, int, float}):
+                    valtype = type(obj.__class__.__dict__[k])
+                    obj.__dict__[k] = valtype(v)
+                else:
+                    obj.__dict__[k] = v
+        storage.save()
+
 
 if __name__ == '__main__':
-    interpreter = console()
-    interpreter.cmdloop()
+    HBNBCommand().cmdloop()
