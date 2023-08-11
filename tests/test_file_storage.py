@@ -64,6 +64,5 @@ class test_file_storage(unittest.TestCase):
         self.assertNotEqual(test_file_storage.instance.all(), {})
 
 
-
 if __name__ == '__main__':
     unittest.main()

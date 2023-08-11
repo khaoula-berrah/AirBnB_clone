@@ -69,7 +69,8 @@ class FileStorage:
             Method that deserialize JSON file to a dictionary of objects.
         """
         try:
-            with open(FileStorage.__file_path, mode='r', encoding='UTF-8') as file:
+            with open(FileStorage.__file_path, mode='r',
+                      encoding='UTF-8') as file:
                 objdict = json.load(file)
                 for o in objdict.values():
                     cls_name = o["__class__"]

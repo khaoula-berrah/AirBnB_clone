@@ -106,6 +106,7 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, line=None):
         """
             Method that create new instances from Classes.
+            Usage: create <class>
         """
         if line is None or line == "":
             print("** class name missing **")
@@ -121,6 +122,11 @@ class HBNBCommand(cmd.Cmd):
         """
             Method shows the data of a specific object by
             The Class Name and Id.
+            Usage:
+                show <class>
+                show <class> id
+                <class>.show()
+                <class>.show(id)
         """
 
         all = storage.all()
@@ -135,6 +141,8 @@ class HBNBCommand(cmd.Cmd):
         elif words[0] not in self.classes:
             print("** class doesn't exist **")
         else:
+            if words[1][0] == "\"" and words[1][-1] == "\"":
+                words[1] = words[1][1:-1]
             full_name = f"{words[0]}.{words[1]}"
             if full_name not in all:
                 print("** no instance found **")
@@ -145,6 +153,8 @@ class HBNBCommand(cmd.Cmd):
         """
             Method that removes an object using its
             Class nams and id.
+            Usage:
+                destroy <class> id or <class>.destroy(id)
         """
 
         if line is None:
@@ -167,10 +177,10 @@ class HBNBCommand(cmd.Cmd):
         """
             Method that prints all objects based on its class name
             or not, as a string list.
+            Usage: all or <class>.all()
         """
 
         all = storage.all()
-        print(line, len(line))
 
         if line is None:
             return
@@ -231,7 +241,6 @@ class HBNBCommand(cmd.Cmd):
             except NameError:
                 print("** value missing **")
                 return False
-
         if len(argl) == 4:
             obj = objdict["{}.{}".format(argl[0], argl[1])]
             if argl[2] in obj.__class__.__dict__.keys():

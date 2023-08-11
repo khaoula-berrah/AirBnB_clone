@@ -43,7 +43,8 @@ class BaseModel:
 
     def __str__(self):
         """
-            function that returns a string representation of the current object.
+            function that returns a string representation of
+            the current object.
 
             Return:
                 (str): string representation of the current object.
