@@ -48,14 +48,38 @@ class HBNBCommand(cmd.Cmd):
     """
     prompt = "(hbnb) "
     classes = {
-            "BaseModel": BaseModel,
-            "User": User,
-            "State": State,
-            "City": City,
-            "Place": Place,
-            "Review": Review,
-            "Amenity": Amenity
+        "BaseModel": BaseModel,
+        "User": User,
+        "State": State,
+        "City": City,
+        "Place": Place,
+        "Review": Review,
+        "Amenity": Amenity
     }
+
+    def default(self, arg):
+        """
+            Method of default behavior for cmd module
+            when input is invalid.
+        """
+        argdict = {
+            "all": self.do_all,
+            "show": self.do_show,
+            "destroy": self.do_destroy,
+            "count": self.do_count,
+            "update": self.do_update
+        }
+        match = re.search(r"\.", arg)
+        if match is not None:
+            argl = [arg[:match.span()[0]], arg[match.span()[1]:]]
+            match = re.search(r"\((.*?)\)", argl[1])
+            if match is not None:
+                command = [argl[1][:match.span()[0]], match.group()[1:-1]]
+                if command[0] in argdict.keys():
+                    call = "{} {}".format(argl[0], command[1])
+                    return argdict[command[0]](call)
+        print("*** Unknown syntax: {}".format(arg))
+        return False
 
     def emptyline(self):
         """
@@ -146,6 +170,7 @@ class HBNBCommand(cmd.Cmd):
         """
 
         all = storage.all()
+        print(line, len(line))
 
         if line is None:
             return
@@ -158,9 +183,21 @@ class HBNBCommand(cmd.Cmd):
             else:
                 obj_list = []
                 for o in all.values():
-                    if line == o.__class__.__name__:
+                    if line.strip() == o.__class__.__name__:
                         obj_list.append(o.__str__())
                 print(obj_list)
+
+    def do_count(self, arg):
+        """
+            Method that counts the number of instances saved.
+            Usage: count <class> or <class>.count()
+        """
+        argl = parse(arg)
+        count = 0
+        for obj in storage.all().values():
+            if argl[0].strip() == obj.__class__.__name__:
+                count += 1
+        print(count)
 
     def do_update(self, line=None):
         """
