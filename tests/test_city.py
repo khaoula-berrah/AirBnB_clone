@@ -59,9 +59,5 @@ class test_city(unittest.TestCase):
         self.assertIsInstance(ins.state_id, int)
 
 
-<<<<<<< HEAD
-if _name_ == '_main_':
-=======
 if __name__ == '__main__':
->>>>>>> f20beb7 (files updated.)
     unittest.main()

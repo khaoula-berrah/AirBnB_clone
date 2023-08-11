@@ -84,9 +84,5 @@ class test_review(unittest.TestCase):
         self.assertIsInstance(ins.updated_at, datetime.datetime)
 
 
-<<<<<<< HEAD
-if _name_ == '_main_':
-=======
 if __name__ == '__main__':
->>>>>>> f20beb7 (files updated.)
     unittest.main()
