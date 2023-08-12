@@ -85,7 +85,7 @@ class HBNBCommand(cmd.Cmd):
         """
             emptyline - function that prints an empty line.
         """
-        return super().emptyline()
+        return False
 
     def do_quit(self, line):
         """
