@@ -46,10 +46,9 @@ class FileStorage:
         """
         if FileStorage.__file_path == "" or FileStorage.__file_path is None:
             return
-        obj = FileStorage.__objects
-        code = {k: obj[k].to_dict() for k in obj.keys()}
-        with open(FileStorage.__file_path, mode="w", encoding="UTF-8") as file:
-            json.dump(code, file)
+        with open(FileStorage.__file_path, "w", encoding="UTF-8") as file:
+            d = {k: v.to_dict() for k, v in FileStorage.__objects.items()}
+            json.dump(d, file)
 
     def classes(self, name):
         """
@@ -62,7 +61,10 @@ class FileStorage:
             "Amenity": Amenity, "State": State, "Review": Review,
             "Place": Place
         }
-        return d[name]
+        if name in d:
+            return d[name]
+        else:
+            return None
 
     def reload(self):
         """
