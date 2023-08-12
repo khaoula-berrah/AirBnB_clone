@@ -101,6 +101,7 @@ class HBNBCommand(cmd.Cmd):
             Return:
                 value (bool): True
         """
+        print("")
         return True
 
     def do_create(self, line=None):
