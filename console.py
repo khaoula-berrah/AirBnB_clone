@@ -12,7 +12,6 @@ from models.review import Review
 from models.state import State
 from models import storage
 
-
 """
     Module of console.
 
@@ -41,6 +40,7 @@ def parse(arg):
         retl = [i.strip(",") for i in lexer]
         retl.append(curly_braces.group())
         return retl
+
 
 class HBNBCommand(cmd.Cmd):
     """
